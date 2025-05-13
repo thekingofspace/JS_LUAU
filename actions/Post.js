@@ -1,0 +1,37 @@
+import http from "http";
+
+export default function (data) {
+  console.log("[JS] - Handling Send with:", data);
+
+  const postData = JSON.stringify({
+    type: "Test",
+    data: data,
+  });
+
+const options = {
+  hostname: "127.0.0.1", // <--- change from "localhost" to "127.0.0.1"
+  port: 8081,
+  path: "/",
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Content-Length": Buffer.byteLength(postData),
+  },
+};
+
+  const req = http.request(options, (res) => {
+    console.log(`[JS] - Response from 8081: ${res.statusCode}`);
+    res.on("data", (chunk) => {
+      console.log(`[JS] - Body: ${chunk}`);
+    });
+  });
+
+  req.on("error", (e) => {
+    console.error(`[JS] - Problem with request: ${e.message}`);
+  });
+
+  req.write(postData);
+  req.end();
+
+  return "Sent message to localhost:8081 with type: Test";
+}
