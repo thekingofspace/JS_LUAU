@@ -15,8 +15,15 @@ local function CheckNet()
 			local BodyData = serde.decode("json", Req.body)
 
 			if Actions[BodyData.type] then
-				Actions[BodyData.type].Connection(BodyData.data)
+				local value = Actions[BodyData.type].Connection(BodyData.data)
+
+				return {
+						status = 200,
+						body = serde.encode("json", value),
+					}
 			end
+
+			return
 		end)
 	end
 end
