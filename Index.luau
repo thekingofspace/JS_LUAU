@@ -15,3 +15,7 @@ end)
 Js_Handler:Invoke("Post", "Hello", function()
      print("Reg Compl")
 end)
+
+Js_Handler:Invoke("Test", "Hello", function()
+     print("Reg Compl")
+end)

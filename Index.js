@@ -29,6 +29,8 @@ const runLuauScript = () => {
 const JSON_FOLDER = "./actions";
 const PORT = 8080;
 
+const globalStore = new Map();
+
 const server = http.createServer(async (req, res) => {
   if (req.method === "POST" && req.headers["content-type"] === "application/json") {
     let body = "";
@@ -41,14 +43,15 @@ const server = http.createServer(async (req, res) => {
         if (fs.existsSync(new URL(modPath))) {
           const mod = await import(modPath);
           if (typeof mod.default === "function") {
-            const result = await mod.default(parsed.data);
-            if (result !== undefined) {
-              res.writeHead(200, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({ response: result }));
-            } else {
-              res.writeHead(200, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({ response: "No result returned from module" }));
+
+            const result = await mod.default(parsed.data, globalStore);
+
+            if (result && result.persist && result.key) {
+              globalStore.set(result.key, result.value);
             }
+
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ response: result?.value ?? result ?? "No result returned from module" }));
           } else {
             res.writeHead(404);
             res.end("Module does not export a default function.");
