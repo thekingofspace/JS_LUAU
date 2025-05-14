@@ -9,7 +9,7 @@ export default function (data) {
   });
 
 const options = {
-  hostname: "127.0.0.1", // <--- change from "localhost" to "127.0.0.1"
+  hostname: "127.0.0.1",
   port: 8081,
   path: "/",
   method: "POST",
