@@ -9,7 +9,7 @@ const runLuauScript = () => {
     const proc = spawn("lune", ["run", "Index"]);
 
     proc.stdout.on("data", (data) => {
-      process.stdout.write(`[LUAU] - ${data}`);
+      process.stdout.write(`${data}`);
     });
 
     proc.stderr.on("data", (data) => {
@@ -20,7 +20,7 @@ const runLuauScript = () => {
       if (code === 0) {
         resolve();
       } else {
-        reject(`[LUAU] - Process exited with code ${code}`);
+        reject(`Process exited with code ${code}`);
       }
     });
   });
@@ -61,7 +61,7 @@ const server = http.createServer(async (req, res) => {
           res.end("Module not found.");
         }
       } catch (err) {
-        console.error("[JS] - Error processing request:", err);
+        console.error("Error processing request:", err);
         res.writeHead(500);
         res.end("Internal server error.");
       }
@@ -73,7 +73,7 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, async () => {
-  console.log(`[JS] HTTP server running on http://localhost:${PORT}`);
+  console.log(`HTTP server running on http://localhost:${PORT}`);
 
   try {
     await runLuauScript();

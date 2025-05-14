@@ -19,12 +19,12 @@ const options = {
 
   const req = http.request(options, (res) => {
     res.on("data", (chunk) => {
-      console.log(`[JS] - ${chunk}`);
+      console.log(`${chunk}`);
     });
   });
 
   req.on("error", (e) => {
-    console.error(`[JS] - Problem with request: ${e.message}`);
+    console.error(`Problem with request: ${e.message}`);
   });
 
   req.write(postData);
