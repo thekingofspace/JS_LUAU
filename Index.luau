@@ -8,6 +8,8 @@ local Signal = Js_Handler.On("Test")
 
 Signal:Connect(function(Data)
     print("RAN")
+
+    return "Fuck"
 end)
 
 Js_Handler:Invoke("Post", "Hello", function()

@@ -1,8 +1,6 @@
 import http from "http";
 
 export default function (data) {
-  console.log("[JS] - Handling Send with:", data);
-
   const postData = JSON.stringify({
     type: "Test",
     data: data,
@@ -20,9 +18,8 @@ const options = {
 };
 
   const req = http.request(options, (res) => {
-    console.log(`[JS] - Response from 8081: ${res.statusCode}`);
     res.on("data", (chunk) => {
-      console.log(`[JS] - Body: ${chunk}`);
+      console.log(`[JS] - ${chunk}`);
     });
   });
 
