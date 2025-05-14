@@ -51,7 +51,7 @@ const server = http.createServer(async (req, res) => {
             }
 
             res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ response: result?.value ?? result ?? "No result returned from module" }));
+            res.end(JSON.stringify(result?.value ?? result ?? "No result returned from module"));
           } else {
             res.writeHead(404);
             res.end("Module does not export a default function.");
